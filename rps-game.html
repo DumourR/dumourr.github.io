@@ -4,11 +4,11 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rock Paper Scissors - DumourR</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Playfair Display', serif;
-      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+      font-family: 'Orbitron', sans-serif;
+      background: linear-gradient(to bottom, #1f1c2c, #928dab);
       color: #fff;
       text-align: center;
       padding: 30px;
@@ -16,19 +16,20 @@
 
     h1 {
       font-size: 2.8em;
-      color: #ff0077;
-      text-shadow: 0 0 10px rgba(255, 0, 119, 0.6);
+      color: #00ffe1;
+      text-shadow: 0 0 15px rgba(0, 255, 225, 0.6);
+      font-family: 'Orbitron', sans-serif;
     }
 
     .game-box {
       margin-top: 40px;
       padding: 20px;
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.08);
       border-radius: 12px;
       max-width: 600px;
       margin-left: auto;
       margin-right: auto;
-      box-shadow: 0 0 20px rgba(255, 0, 119, 0.4);
+      box-shadow: 0 0 30px rgba(0, 255, 225, 0.3);
     }
 
     .choices {
@@ -39,20 +40,20 @@
     }
 
     .choices button {
-      font-size: 1.2em;
-      padding: 10px 20px;
+      font-size: 1.1em;
+      padding: 10px;
       border-radius: 10px;
       border: none;
       cursor: pointer;
-      background: #333;
+      background: #222;
       color: #fff;
       transition: 0.3s;
-      font-family: 'Playfair Display', serif;
+      font-family: 'Orbitron', sans-serif;
     }
 
     .choices button:hover {
-      background: #ff0077;
-      box-shadow: 0 0 12px rgba(255, 0, 119, 0.5);
+      background: #00ffe1;
+      box-shadow: 0 0 12px rgba(0, 255, 225, 0.6);
     }
 
     #result, #score {
@@ -70,63 +71,49 @@
     }
 
     #subscribe-btn button {
-      background: #ff0077;
+      background: #00ffe1;
       padding: 12px 25px;
       font-size: 1em;
       border-radius: 8px;
       border: none;
-      color: white;
+      color: black;
       cursor: pointer;
-      font-family: 'Playfair Display', serif;
+      font-family: 'Orbitron', sans-serif;
       animation: pulse 1.5s infinite;
     }
 
     .icon {
-      width: 50px;
-      height: 50px;
-      image-rendering: pixelated;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
     }
 
     @keyframes pulse {
-      0% {
-        transform: scale(1);
-        box-shadow: 0 0 0px rgba(255, 0, 119, 0.5);
-      }
-      50% {
-        transform: scale(1.05);
-        box-shadow: 0 0 20px rgba(255, 0, 119, 0.7);
-      }
-      100% {
-        transform: scale(1);
-        box-shadow: 0 0 0px rgba(255, 0, 119, 0.5);
-      }
+      0% { transform: scale(1); box-shadow: 0 0 0px rgba(0, 255, 225, 0.5); }
+      50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(0, 255, 225, 0.8); }
+      100% { transform: scale(1); box-shadow: 0 0 0px rgba(0, 255, 225, 0.5); }
     }
 
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
 <body>
   <h1>Rock Paper Scissors</h1>
   <div class="game-box">
-    <p>You have 5 seconds to choose before the bot plays.</p>
+    <p>Choose your move instantly. Bot will respond fast!</p>
     <div class="choices">
       <button onclick="userPlay('rock')">
-        <img src="https://cdn-icons-png.flaticon.com/128/2948/2948035.png" class="icon"><br>Rock
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Fist.svg/1024px-Fist.svg.png" class="icon"><br>Rock
       </button>
       <button onclick="userPlay('paper')">
-        <img src="https://cdn-icons-png.flaticon.com/128/2948/2948043.png" class="icon"><br>Paper
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Paper_hand.svg/1024px-Paper_hand.svg.png" class="icon"><br>Paper
       </button>
       <button onclick="userPlay('scissors')">
-        <img src="https://cdn-icons-png.flaticon.com/128/2948/2948051.png" class="icon"><br>Scissors
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Scissors_hand.svg/1024px-Scissors_hand.svg.png" class="icon"><br>Scissors
       </button>
     </div>
     <div id="score">
@@ -153,41 +140,33 @@
     let round = 0;
     let userScore = 0;
     let botScore = 0;
-    let waiting = false;
 
     function userPlay(playerChoice) {
-      if (round >= 3 || waiting) return;
-      waiting = true;
+      if (round >= 3) return;
       document.getElementById("clickSound").play();
 
+      const botChoice = choices[Math.floor(Math.random() * choices.length)];
       document.getElementById('result').innerHTML +=
-        `<p>Round ${round + 1}: You chose <strong>${playerChoice}</strong>.</p>`;
+        `<p>Round ${round + 1}: You chose <strong>${playerChoice}</strong>. Bot chose <strong>${botChoice}</strong>.</p>`;
 
-      setTimeout(() => {
-        const botChoice = choices[Math.floor(Math.random() * choices.length)];
-        document.getElementById('result').innerHTML +=
-          `<p>Bot chose <strong>${botChoice}</strong>.</p>`;
+      const outcome = getResult(playerChoice, botChoice);
+      if (outcome === 'win') {
+        userScore++;
+        document.getElementById("winSound").play();
+      } else if (outcome === 'lose') {
+        botScore++;
+        document.getElementById("loseSound").play();
+      }
 
-        const outcome = getResult(playerChoice, botChoice);
-        if (outcome === 'win') {
-          userScore++;
-          document.getElementById("winSound").play();
-        } else if (outcome === 'lose') {
-          botScore++;
-          document.getElementById("loseSound").play();
-        }
+      document.getElementById("userScore").textContent = userScore;
+      document.getElementById("botScore").textContent = botScore;
 
-        document.getElementById("userScore").textContent = userScore;
-        document.getElementById("botScore").textContent = botScore;
+      round++;
 
-        round++;
-        waiting = false;
-
-        if (round === 3) {
-          document.getElementById('final-choice').style.display = 'block';
-          document.getElementById('subscribe-btn').style.display = 'block';
-        }
-      }, 5000);
+      if (round === 3) {
+        document.getElementById('final-choice').style.display = 'block';
+        document.getElementById('subscribe-btn').style.display = 'block';
+      }
     }
 
     function getResult(user, bot) {
