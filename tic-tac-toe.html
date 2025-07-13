@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Tic Tac Toe - DumourR</title>
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@700&display=swap" rel="stylesheet">
   <style>
@@ -40,7 +40,6 @@
     h1 {
       font-size: 3em;
       color: #ff0077;
-      text-shadow: 0 0 10px rgba(255, 0, 119, 0.6);
       margin-bottom: 20px;
     }
 
@@ -77,14 +76,28 @@
       to { transform: scale(1); opacity: 1; }
     }
 
-    #message {
-      margin-top: 20px;
-      font-size: 1.5em;
+    #popup {
+      display: none;
+      position: fixed;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #111;
+      color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px #ff0077;
+      text-align: center;
+      z-index: 10;
     }
 
     #playAgain {
-      display: none;
       margin-top: 15px;
+    }
+
+    #subscribe-btn {
+      display: none;
+      margin-top: 20px;
     }
 
     button {
@@ -100,110 +113,120 @@
   </style>
 </head>
 <body>
-  <div id="intro">🎮 Get Ready to Play Tic Tac Toe!</div>
 
-  <div id="gameContainer">
-    <h1>TIC TAC TOE</h1>
-    <div class="board" id="board"></div>
-    <div id="message"></div>
-    <div id="playAgain"><button onclick="resetGame()">Play Again</button></div>
+<div id="intro">🎮 Get Ready to Play Tic Tac Toe!</div>
+
+<div id="popup"></div>
+
+<div id="gameContainer">
+  <h1>TIC TAC TOE</h1>
+  <div class="board" id="board"></div>
+  <div id="playAgain"><button onclick="resetGame()">Play Again</button></div>
+  <div id="subscribe-btn">
+    <p><strong>Subscribe to DumourR now 🎥</strong></p>
+    <a href="https://youtube.com/@dumourr1" target="_blank">
+      <button>Subscribe</button>
+    </a>
   </div>
+</div>
 
-  <script>
-    const boardEl = document.getElementById('board');
-    const messageEl = document.getElementById('message');
-    const playAgainEl = document.getElementById('playAgain');
+<script>
+  const boardEl = document.getElementById('board');
+  const popupEl = document.getElementById('popup');
+  const playAgainEl = document.getElementById('playAgain');
+  const subscribeBtn = document.getElementById('subscribe-btn');
 
-    let board = Array(9).fill('');
-    let userTurn = true;
-    let gameOver = false;
+  let board = Array(9).fill('');
+  let userTurn = true;
+  let gameOver = false;
 
+  setTimeout(() => {
+    document.getElementById('intro').style.display = 'none';
+    document.getElementById('gameContainer').style.display = 'flex';
+    drawBoard();
+  }, 2000);
+
+  function drawBoard() {
+    boardEl.innerHTML = '';
+    board.forEach((value, i) => {
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      cell.dataset.index = i;
+      cell.onclick = () => makeMove(i);
+      cell.innerHTML = value ? `<span>${value}</span>` : '';
+      boardEl.appendChild(cell);
+    });
+  }
+
+  function makeMove(index) {
+    if (!userTurn || board[index] || gameOver) return;
+    board[index] = '❌';
+    userTurn = false;
+    drawBoard();
+    if (checkWinner('❌')) return endGame('You Win!');
+    if (board.every(cell => cell)) return endGame(\"It's a Draw!\");
     setTimeout(() => {
-      document.getElementById('intro').style.display = 'none';
-      document.getElementById('gameContainer').style.display = 'flex';
-      drawBoard();
-    }, 2000);
-
-    function drawBoard() {
-      boardEl.innerHTML = '';
-      board.forEach((value, i) => {
-        const cell = document.createElement('div');
-        cell.className = 'cell';
-        cell.dataset.index = i;
-        cell.onclick = () => makeMove(i);
-        cell.innerHTML = value ? `<span>${value}</span>` : '';
-        boardEl.appendChild(cell);
-      });
-    }
-
-    function makeMove(index) {
-      if (!userTurn || board[index] || gameOver) return;
-      board[index] = '❌';
-      userTurn = false;
-      drawBoard();
-      if (checkWinner('❌')) return endGame('You win!');
-      if (board.every(cell => cell)) return endGame("It's a draw!");
-
-      setTimeout(() => {
-        const move = getBestMove();
-        board[move] = '⭕';
-        if (checkWinner('⭕')) return endGame('Bot wins!');
-        if (board.every(cell => cell)) return endGame("It's a draw!");
-        userTurn = true;
-        drawBoard();
-      }, 800);
-    }
-
-    function getBestMove() {
-      // Simple unbeatable bot using minimax
-      const minimax = (newBoard, isMaximizing) => {
-        if (checkWin(newBoard, '⭕')) return { score: 1 };
-        if (checkWin(newBoard, '❌')) return { score: -1 };
-        if (newBoard.every(cell => cell)) return { score: 0 };
-
-        const scores = [];
-        for (let i = 0; i < 9; i++) {
-          if (!newBoard[i]) {
-            newBoard[i] = isMaximizing ? '⭕' : '❌';
-            const result = minimax(newBoard, !isMaximizing);
-            scores.push({ index: i, score: result.score });
-            newBoard[i] = '';
-          }
-        }
-        return isMaximizing
-          ? scores.reduce((max, curr) => curr.score > max.score ? curr : max)
-          : scores.reduce((min, curr) => curr.score < min.score ? curr : min);
-      };
-      return minimax([...board], true).index;
-    }
-
-    function checkWin(b, p) {
-      const winCombo = [
-        [0,1,2],[3,4,5],[6,7,8],
-        [0,3,6],[1,4,7],[2,5,8],
-        [0,4,8],[2,4,6]
-      ];
-      return winCombo.some(c => c.every(i => b[i] === p));
-    }
-
-    function checkWinner(p) {
-      return checkWin(board, p);
-    }
-
-    function endGame(msg) {
-      gameOver = true;
-      messageEl.textContent = msg;
-      playAgainEl.style.display = 'block';
-    }
-
-    function resetGame() {
-      board = Array(9).fill('');
+      const move = getBestMove();
+      board[move] = '⭕';
+      if (checkWinner('⭕')) return endGame('Bot Wins!');
+      if (board.every(cell => cell)) return endGame(\"It's a Draw!\");
       userTurn = true;
-      gameOver = false;
-      messageEl.textContent = '';
-      playAgainEl.style.display = 'none';
       drawBoard();
-    }
-  </script>
+    }, 700);
+  }
+
+  function getBestMove() {
+    const minimax = (newBoard, isMaximizing) => {
+      if (checkWin(newBoard, '⭕')) return { score: 1 };
+      if (checkWin(newBoard, '❌')) return { score: -1 };
+      if (newBoard.every(cell => cell)) return { score: 0 };
+      const scores = [];
+      for (let i = 0; i < 9; i++) {
+        if (!newBoard[i]) {
+          newBoard[i] = isMaximizing ? '⭕' : '❌';
+          const result = minimax(newBoard, !isMaximizing);
+          scores.push({ index: i, score: result.score });
+          newBoard[i] = '';
+        }
+      }
+      return isMaximizing
+        ? scores.reduce((max, curr) => curr.score > max.score ? curr : max)
+        : scores.reduce((min, curr) => curr.score < min.score ? curr : min);
+    };
+    return minimax([...board], true).index;
+  }
+
+  function checkWin(b, p) {
+    const winCombo = [
+      [0,1,2],[3,4,5],[6,7,8],
+      [0,3,6],[1,4,7],[2,5,8],
+      [0,4,8],[2,4,6]
+    ];
+    return winCombo.some(c => c.every(i => b[i] === p));
+  }
+
+  function checkWinner(p) {
+    return checkWin(board, p);
+  }
+
+  function endGame(msg) {
+    gameOver = true;
+    popupEl.innerHTML = `<h2>${msg}</h2>`;
+    popupEl.style.display = 'block';
+    playAgainEl.style.display = 'block';
+    subscribeBtn.style.display = 'block';
+  }
+
+  function resetGame() {
+    board = Array(9).fill('');
+    userTurn = true;
+    gameOver = false;
+    popupEl.style.display = 'none';
+    playAgainEl.style.display = 'none';
+    subscribeBtn.style.display = 'none';
+    drawBoard();
+  }
+</script>
+
 </body>
 </html>
