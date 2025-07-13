@@ -34,7 +34,7 @@
     .choices {
       display: flex;
       justify-content: center;
-      gap: 15px;
+      gap: 20px;
       margin: 20px 0;
     }
 
@@ -55,14 +55,18 @@
       box-shadow: 0 0 12px rgba(255, 0, 119, 0.5);
     }
 
-    #result {
+    #result, #score {
       font-size: 1.2em;
       margin-top: 15px;
     }
 
-    #final-choice, #subscribe-btn, #outcome-options {
+    #final-choice, #subscribe-btn {
       display: none;
       margin-top: 25px;
+    }
+
+    #subscribe-btn {
+      animation: fadeIn 2s ease-in-out forwards;
     }
 
     #subscribe-btn button {
@@ -73,8 +77,40 @@
       border: none;
       color: white;
       cursor: pointer;
-      box-shadow: 0 0 12px #ff0077aa;
       font-family: 'Playfair Display', serif;
+      animation: pulse 1.5s infinite;
+    }
+
+    .icon {
+      width: 50px;
+      height: 50px;
+      image-rendering: pixelated;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+        box-shadow: 0 0 0px rgba(255, 0, 119, 0.5);
+      }
+      50% {
+        transform: scale(1.05);
+        box-shadow: 0 0 20px rgba(255, 0, 119, 0.7);
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0px rgba(255, 0, 119, 0.5);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
@@ -83,17 +119,22 @@
   <div class="game-box">
     <p>You have 5 seconds to choose before the bot plays.</p>
     <div class="choices">
-      <button onclick="userPlay('rock')">Rock</button>
-      <button onclick="userPlay('paper')">Paper</button>
-      <button onclick="userPlay('scissors')">Scissors</button>
+      <button onclick="userPlay('rock')">
+        <img src="https://cdn-icons-png.flaticon.com/128/2948/2948035.png" class="icon"><br>Rock
+      </button>
+      <button onclick="userPlay('paper')">
+        <img src="https://cdn-icons-png.flaticon.com/128/2948/2948043.png" class="icon"><br>Paper
+      </button>
+      <button onclick="userPlay('scissors')">
+        <img src="https://cdn-icons-png.flaticon.com/128/2948/2948051.png" class="icon"><br>Scissors
+      </button>
+    </div>
+    <div id="score">
+      Score: <span id="userScore">0</span> - <span id="botScore">0</span>
     </div>
     <div id="result"></div>
     <div id="final-choice">
-      <p>Game over! Did you win or lose?</p>
-      <div id="outcome-options">
-        <button onclick="showSubscribe('win')">I Won</button>
-        <button onclick="showSubscribe('lose')">I Lost</button>
-      </div>
+      <p>Game over!</p>
     </div>
     <div id="subscribe-btn">
       <p><strong>Subscribe to DumourR now 🎥</strong></p>
@@ -103,14 +144,21 @@
     </div>
   </div>
 
+  <audio id="clickSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_ef20662e9f.mp3?filename=button-click-124467.mp3"></audio>
+  <audio id="winSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_a26b7c4e53.mp3?filename=game-win-sound-124071.mp3"></audio>
+  <audio id="loseSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4d74074d2b.mp3?filename=lose-124078.mp3"></audio>
+
   <script>
     const choices = ['rock', 'paper', 'scissors'];
     let round = 0;
+    let userScore = 0;
+    let botScore = 0;
     let waiting = false;
 
     function userPlay(playerChoice) {
       if (round >= 3 || waiting) return;
       waiting = true;
+      document.getElementById("clickSound").play();
 
       document.getElementById('result').innerHTML +=
         `<p>Round ${round + 1}: You chose <strong>${playerChoice}</strong>.</p>`;
@@ -120,19 +168,36 @@
         document.getElementById('result').innerHTML +=
           `<p>Bot chose <strong>${botChoice}</strong>.</p>`;
 
+        const outcome = getResult(playerChoice, botChoice);
+        if (outcome === 'win') {
+          userScore++;
+          document.getElementById("winSound").play();
+        } else if (outcome === 'lose') {
+          botScore++;
+          document.getElementById("loseSound").play();
+        }
+
+        document.getElementById("userScore").textContent = userScore;
+        document.getElementById("botScore").textContent = botScore;
+
         round++;
         waiting = false;
 
         if (round === 3) {
           document.getElementById('final-choice').style.display = 'block';
-          document.getElementById('outcome-options').style.display = 'block';
+          document.getElementById('subscribe-btn').style.display = 'block';
         }
-      }, 5000); // 5 second delay before bot plays
+      }, 5000);
     }
 
-    function showSubscribe(result) {
-      document.getElementById('outcome-options').style.display = 'none';
-      document.getElementById('subscribe-btn').style.display = 'block';
+    function getResult(user, bot) {
+      if (user === bot) return 'draw';
+      if (
+        (user === 'rock' && bot === 'scissors') ||
+        (user === 'paper' && bot === 'rock') ||
+        (user === 'scissors' && bot === 'paper')
+      ) return 'win';
+      return 'lose';
     }
   </script>
 </body>
