@@ -26,72 +26,71 @@
       top: 0;
       width: 100%;
       background: rgba(0, 0, 0, 0.85);
-      padding: 15px 30px;
+      padding: 10px 30px;
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       align-items: center;
+      text-align: center;
       z-index: 999;
-      animation: fadeInDown 1s ease-out 60fps;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
     }
 
     .logo {
-      font-size: 1.8em;
+      font-size: 2.5em;
       font-weight: bold;
       color: #ff0077;
-      font-family: 'Orbitron', sans-serif;
+      font-family: 'Cinzel', serif;
+      margin-bottom: 5px;
     }
 
-    nav ul {
+    .nav-links {
       display: flex;
       gap: 20px;
-      list-style: none;
+      flex-wrap: wrap;
     }
 
-    nav ul li a {
+    .nav-links a {
       color: #ccc;
       text-decoration: none;
+      font-size: 1em;
       transition: color 0.3s;
     }
 
-    nav ul li a:hover {
+    .nav-links a:hover {
       color: #ff0077;
     }
 
     .hero {
-      padding-top: 100px;
+      padding-top: 150px;
       min-height: 100vh;
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      padding: 100px 5%;
+      justify-content: center;
       background: radial-gradient(circle, #101010, #0d0d0d);
       animation: backgroundShift 60s linear infinite;
-      flex-wrap: wrap;
-    }
-
-    .hero-content {
-      max-width: 600px;
-      animation: fadeIn 2s ease-in;
+      padding: 100px 20px;
+      text-align: center;
     }
 
     .hero h1 {
-      font-size: 3.5em;
-      margin-bottom: 20px;
+      font-size: 3em;
       color: #fff;
       text-shadow: 0 0 20px #ff0077;
+      margin-bottom: 20px;
     }
 
     .hero p {
       font-size: 1.2em;
       color: #bbb;
-      line-height: 1.6;
+      max-width: 600px;
     }
 
     .links {
       margin-top: 30px;
       display: flex;
       flex-wrap: wrap;
+      justify-content: center;
       gap: 20px;
     }
 
@@ -113,14 +112,6 @@
       box-shadow: 0 0 15px #ff0077;
     }
 
-    .hero-video {
-      width: 480px;
-      height: 270px;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(255, 0, 119, 0.4);
-      animation: fadeIn 2s ease-in 1s forwards;
-    }
-
     section {
       padding: 100px 20px;
       text-align: center;
@@ -131,12 +122,20 @@
     }
 
     .projects iframe {
-      width: 320px;
+      width: 100%;
+      max-width: 320px;
       height: 180px;
       margin: 10px;
       border-radius: 10px;
       border: none;
       box-shadow: 0 0 15px rgba(255, 0, 119, 0.3);
+    }
+
+    .video-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
     }
 
     footer {
@@ -145,26 +144,6 @@
       background: #0a0a0a;
       color: #666;
       font-size: 0.9em;
-    }
-
-    @keyframes fadeIn {
-      0% { opacity: 0; }
-      100% { opacity: 1; }
-    }
-
-    @keyframes slideIn {
-      0% { transform: translateY(-60px); opacity: 0; }
-      100% { transform: translateY(0); opacity: 1; }
-    }
-
-    @keyframes fadeInUp {
-      0% { transform: translateY(30px); opacity: 0; }
-      100% { transform: translateY(0); opacity: 1; }
-    }
-
-    @keyframes fadeInDown {
-      0% { transform: translateY(-20px); opacity: 0; }
-      100% { transform: translateY(0); opacity: 1; }
     }
 
     @keyframes backgroundShift {
@@ -176,43 +155,45 @@
 <body>
   <nav>
     <div class="logo">DumourR</div>
-    <ul>
-      <li><a href="#home">Home</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#projects">Projects</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </div>
   </nav>
 
   <section id="home" class="hero">
-    <div class="hero-content">
-      <h1>DumourR</h1>
-      <p>Silent anime edits. Cinematic moments. Welcome to Noctale Visuals — where emotion speaks louder than words.</p>
-      <div class="links">
-        <a href="https://www.youtube.com/@dumourr1" target="_blank" class="link-button">YouTube</a>
-        <a href="https://www.instagram.com/noctale.visuals" target="_blank" class="link-button">Instagram</a>
-      </div>
+    <h1>Welcome to Noctale Visuals</h1>
+    <p>Silent anime edits. Cinematic moments. Where emotion speaks louder than words.</p>
+    <div class="links">
+      <a href="https://www.youtube.com/@dumourr1" target="_blank" class="link-button">My YouTube Channel</a>
+      <a href="https://www.instagram.com/noctale.visuals" target="_blank" class="link-button">Instagram</a>
     </div>
-    <iframe class="hero-video" src="https://www.youtube.com/embed/2xKLteyhD7E?autoplay=1&mute=1&controls=0&loop=1&playlist=2xKLteyhD7E" allow="autoplay; encrypted-media" allowfullscreen></iframe>
   </section>
 
   <section id="about" class="section dark">
     <h2>About Me</h2>
-    <p>I’m DumourR, a visual storyteller who expresses emotion through silence and aesthetic anime visuals. My edits are cinematic, slow, and deeply atmospheric — designed to connect without words. Every frame, every transition, and every pause is intentional.</p>
+    <p>I’m DumourR — a storyteller who edits with silence. My anime visuals are slow, emotional, and cinematic, aiming to connect deeper than words ever could.</p>
   </section>
 
   <section id="projects" class="section">
-    <h2>Featured Shorts</h2>
-    <div class="projects">
-      <iframe src="https://www.youtube.com/embed/2xKLteyhD7E" allowfullscreen></iframe>
-      <iframe src="https://www.youtube.com/embed/lGRojwVzpls" allowfullscreen></iframe>
-      <iframe src="https://www.youtube.com/embed/RTYlo8nuU3w" allowfullscreen></iframe>
+    <h2>Featured Edits</h2>
+    <div class="video-row">
+      <iframe src="https://www.youtube.com/embed/4tFL0sBELc4" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/JM-q_uiaG3w" allowfullscreen></iframe>
+      <iframe src="https://www.youtube.com/embed/Xp0rQGMuXpo" allowfullscreen></iframe>
     </div>
   </section>
 
   <section id="contact" class="section dark">
-    <h2>Contact</h2>
-    <p>For collaborations, edits, or any creative inquiries, connect with me on Instagram or YouTube. I’m open to silent stories that speak the loudest.</p>
+    <h2>Contact Me</h2>
+    <p>You can reach out for collaborations or any creative work:</p>
+    <p><strong>Email:</strong> dumourr1@gmail.com</p>
+    <div class="links">
+      <a href="https://www.youtube.com/@dumourr1" target="_blank" class="link-button">YouTube</a>
+      <a href="https://www.instagram.com/noctale.visuals" target="_blank" class="link-button">Instagram</a>
+    </div>
   </section>
 
   <footer>
