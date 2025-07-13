@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DUMOURR | Noctale Visuals</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Quicksand:wght@400;600&family=Great+Vibes&family=Cinzel+Decorative:wght@700&family=Orbitron:wght@500&family=Rubik+Mono+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Quicksand:wght@400;600&family=Great+Vibes&family=Cinzel+Decorative:wght@700&family=Orbitron:wght@500&family=Rubik+Mono+One&family=Lobster&display=swap" rel="stylesheet">
   <style>
     html {
       scroll-behavior: smooth;
@@ -75,11 +75,11 @@
     }
 
     .hero h1 {
+      font-family: 'Lobster', cursive;
       font-size: 2.5em;
       color: #00ff88;
       text-shadow: 0 0 15px #00ff88;
       margin-bottom: 20px;
-      text-transform: lowercase;
     }
 
     .hero p {
@@ -115,34 +115,26 @@
       box-shadow: 0 0 30px rgba(255, 75, 43, 0.9);
     }
 
-    .floating-subscribe {
-      position: fixed;
-      bottom: 25px;
-      right: 25px;
-      z-index: 1000;
-      background: #ff4b2b;
-      color: #fff;
-      padding: 12px 20px;
-      border-radius: 40px;
-      font-weight: bold;
-      font-size: 1em;
-      text-decoration: none;
-      box-shadow: 0 0 15px rgba(255, 75, 43, 0.7);
-      transition: all 0.3s ease;
-      display: none;
-    }
-
-    .floating-subscribe.show {
-      display: block;
-    }
-
     section {
       padding: 100px 20px;
       text-align: center;
     }
 
-    .dark {
-      background: rgba(255, 255, 255, 0.03);
+    section h2 {
+      font-size: 2em;
+      margin-bottom: 30px;
+      color: #fff;
+      text-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff;
+      animation: pulseGlow 2s ease-in-out infinite;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% {
+        text-shadow: 0 0 10px #ff00ff, 0 0 20px #00ffff;
+      }
+      50% {
+        text-shadow: 0 0 20px #ff00ff, 0 0 40px #00ffff;
+      }
     }
 
     .projects iframe {
@@ -160,22 +152,10 @@
       transform: scale(1.05);
     }
 
-    #game {
-      padding: 60px;
-      text-align: center;
-    }
-
-    #gameOverText {
-      font-size: 1.5em;
-      margin-top: 20px;
-      color: #ff4b2b;
-      display: none;
-    }
-
-    canvas {
-      border: 3px solid #ffffff;
-      background: #000;
-      box-shadow: 0 0 15px #00ff88;
+    #contact a {
+      color: #00ffcc;
+      font-weight: bold;
+      text-decoration: underline;
     }
 
     footer {
@@ -198,7 +178,6 @@
   </style>
 </head>
 <body>
-
   <nav>
     <div class="logo">DUMOURR</div>
     <div class="nav-links">
@@ -219,7 +198,22 @@
     </div>
   </section>
 
-  <!-- rest of your content here remains unchanged -->
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="projects">
+      <iframe src="https://youtube.com/shorts/4tFL0sBELc4?si=TLQCnjcb6QV8JI5D"></iframe>
+      <iframe src="https://youtube.com/shorts/JM-q_uiaG3w?si=jkrB4WIgRDmu5rPd"></iframe>
+      <iframe src="https://youtube.com/shorts/Xp0rQGMuXpo?si=5bArDNc4sBOb_Wvy"></iframe>
+    </div>
+  </section>
 
+  <section id="contact">
+    <h2>Contact</h2>
+    <p>Email me at <a href="mailto:dumourr1@gmail.com">dumourr1@gmail.com</a></p>
+  </section>
+
+  <footer>
+    &copy; 2025 DumourR | Noctale Visuals. All rights reserved.
+  </footer>
 </body>
 </html>
