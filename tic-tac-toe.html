@@ -4,195 +4,218 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Tic Tac Toe - DumourR</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Cinzel&family=Rubik:wght@700&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       padding: 0;
-      background: linear-gradient(135deg, #1e1e2f, #111);
-      font-family: 'Orbitron', sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
       color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
       text-align: center;
     }
 
     h1 {
       font-size: 3em;
-      margin: 20px 0;
-      color: #f39c12;
-      font-family: 'Cinzel', serif;
-      animation: fadeInDown 1s ease-out;
+      color: #ffcc00;
+      text-shadow: 0 0 10px rgba(255, 204, 0, 0.6);
     }
 
     .board {
       display: grid;
       grid-template-columns: repeat(3, 100px);
+      grid-template-rows: repeat(3, 100px);
       gap: 10px;
-      justify-content: center;
-      margin-top: 30px;
+      margin-top: 20px;
     }
 
     .cell {
       width: 100px;
       height: 100px;
-      background: #222;
+      font-size: 2em;
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 2px solid #fff;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 2.5em;
       cursor: pointer;
-      border-radius: 10px;
-      transition: background 0.3s ease;
-      font-family: 'Rubik', sans-serif;
+      transition: 0.3s;
     }
 
     .cell:hover {
-      background: #f39c12;
-      color: #000;
+      background-color: rgba(255, 255, 255, 0.2);
     }
 
-    #status {
-      margin-top: 20px;
-      font-size: 1.5em;
-      color: #00eaff;
-    }
-
-    #resetBtn {
+    #message {
       margin-top: 30px;
-      padding: 12px 24px;
+      font-size: 1.5em;
+    }
+
+    #restartBtn, #subscribeBtn {
+      margin-top: 20px;
+      padding: 12px 25px;
       font-size: 1em;
       border: none;
-      background: #f39c12;
-      color: #000;
       border-radius: 8px;
+      background-color: #ffcc00;
+      color: #000;
       cursor: pointer;
-      font-family: 'Orbitron', sans-serif;
+      display: none;
     }
 
-    @keyframes fadeInDown {
-      from { opacity: 0; transform: translateY(-40px); }
-      to { opacity: 1; transform: translateY(0); }
+    #subscribeBtn {
+      background-color: #ff0077;
+      color: #fff;
+      box-shadow: 0 0 12px rgba(255, 0, 119, 0.6);
     }
   </style>
 </head>
 <body>
   <h1>Tic Tac Toe</h1>
-  <div id="status">Your Turn</div>
   <div class="board" id="board"></div>
-  <button id="resetBtn" onclick="resetGame()">Play Again</button>
+  <div id="message"></div>
+  <button id="restartBtn" onclick="startGame()">Play Again</button>
+  <a href="https://youtube.com/@dumourr1" target="_blank">
+    <button id="subscribeBtn">Subscribe to DumourR 🎥</button>
+  </a>
 
   <script>
     const boardEl = document.getElementById("board");
-    const statusEl = document.getElementById("status");
-    let board = Array(9).fill("");
-    let userTurn = true;
-    let gameActive = true;
+    const messageEl = document.getElementById("message");
+    const restartBtn = document.getElementById("restartBtn");
+    const subscribeBtn = document.getElementById("subscribeBtn");
+    let board = [];
+    let gameOver = false;
+
+    function startGame() {
+      board = Array(9).fill(null);
+      gameOver = false;
+      messageEl.textContent = "";
+      restartBtn.style.display = "none";
+      subscribeBtn.style.display = "none";
+      renderBoard();
+    }
 
     function renderBoard() {
       boardEl.innerHTML = "";
-      board.forEach((val, idx) => {
+      board.forEach((value, i) => {
         const cell = document.createElement("div");
-        cell.classList.add("cell");
-        cell.textContent = val;
-        cell.onclick = () => handleClick(idx);
+        cell.className = "cell";
+        cell.textContent = value ? value : "";
+        cell.onclick = () => playerMove(i);
         boardEl.appendChild(cell);
       });
     }
 
-    function handleClick(index) {
-      if (!gameActive || board[index] !== "" || !userTurn) return;
+    function playerMove(index) {
+      if (gameOver || board[index]) return;
       board[index] = "X";
-      userTurn = false;
-      renderBoard();
-      checkWinner();
-      if (gameActive) setTimeout(botMove, 800);
+      if (checkWin("X")) {
+        endGame("You Win!");
+        return;
+      }
+      if (board.every(cell => cell)) {
+        endGame("It's a draw!");
+        return;
+      }
+      setTimeout(botMove, 300);
     }
 
     function botMove() {
-      let bestScore = -Infinity;
-      let move;
-      for (let i = 0; i < 9; i++) {
-        if (board[i] === "") {
-          board[i] = "O";
-          let score = minimax(board, 0, false);
-          board[i] = "";
-          if (score > bestScore) {
-            bestScore = score;
-            move = i;
-          }
-        }
+      const bestMove = minimax(board, "O").index;
+      board[bestMove] = "O";
+      if (checkWin("O")) {
+        endGame("Bot Wins!");
+        return;
       }
-      board[move] = "O";
-      userTurn = true;
+      if (board.every(cell => cell)) {
+        endGame("It's a draw!");
+        return;
+      }
       renderBoard();
-      checkWinner();
     }
 
-    function minimax(board, depth, isMaximizing) {
-      const winner = checkStaticWinner();
-      if (winner === "X") return -10 + depth;
-      if (winner === "O") return 10 - depth;
-      if (!board.includes("")) return 0;
+    function checkWin(player) {
+      const winPatterns = [
+        [0, 1, 2], [3, 4, 5], [6, 7, 8],
+        [0, 3, 6], [1, 4, 7], [2, 5, 8],
+        [0, 4, 8], [2, 4, 6]
+      ];
+      return winPatterns.some(pattern =>
+        pattern.every(index => board[index] === player)
+      );
+    }
 
-      if (isMaximizing) {
+    function endGame(msg) {
+      gameOver = true;
+      messageEl.textContent = msg;
+      restartBtn.style.display = "inline-block";
+      subscribeBtn.style.display = "inline-block";
+      renderBoard();
+    }
+
+    function minimax(newBoard, player) {
+      const availSpots = newBoard
+        .map((val, idx) => (val ? null : idx))
+        .filter(val => val !== null);
+
+      if (checkStaticWin(newBoard, "X")) return { score: -10 };
+      if (checkStaticWin(newBoard, "O")) return { score: 10 };
+      if (availSpots.length === 0) return { score: 0 };
+
+      const moves = [];
+      for (let i = 0; i < availSpots.length; i++) {
+        const move = {};
+        move.index = availSpots[i];
+        newBoard[availSpots[i]] = player;
+
+        const result = minimax(newBoard, player === "O" ? "X" : "O");
+        move.score = result.score;
+
+        newBoard[availSpots[i]] = null;
+        moves.push(move);
+      }
+
+      let bestMove;
+      if (player === "O") {
         let bestScore = -Infinity;
-        for (let i = 0; i < 9; i++) {
-          if (board[i] === "") {
-            board[i] = "O";
-            bestScore = Math.max(bestScore, minimax(board, depth + 1, false));
-            board[i] = "";
+        moves.forEach((m, i) => {
+          if (m.score > bestScore) {
+            bestScore = m.score;
+            bestMove = i;
           }
-        }
-        return bestScore;
+        });
       } else {
         let bestScore = Infinity;
-        for (let i = 0; i < 9; i++) {
-          if (board[i] === "") {
-            board[i] = "X";
-            bestScore = Math.min(bestScore, minimax(board, depth + 1, true));
-            board[i] = "";
+        moves.forEach((m, i) => {
+          if (m.score < bestScore) {
+            bestScore = m.score;
+            bestMove = i;
           }
-        }
-        return bestScore;
+        });
       }
+
+      return moves[bestMove];
     }
 
-    function checkStaticWinner() {
-      const winPatterns = [
-        [0,1,2],[3,4,5],[6,7,8],
-        [0,3,6],[1,4,7],[2,5,8],
-        [0,4,8],[2,4,6]
-      ];
-      for (let pattern of winPatterns) {
-        const [a,b,c] = pattern;
-        if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-          return board[a];
-        }
-      }
-      return null;
+    function checkStaticWin(b, p) {
+      return (
+        (b[0] === p && b[1] === p && b[2] === p) ||
+        (b[3] === p && b[4] === p && b[5] === p) ||
+        (b[6] === p && b[7] === p && b[8] === p) ||
+        (b[0] === p && b[3] === p && b[6] === p) ||
+        (b[1] === p && b[4] === p && b[7] === p) ||
+        (b[2] === p && b[5] === p && b[8] === p) ||
+        (b[0] === p && b[4] === p && b[8] === p) ||
+        (b[2] === p && b[4] === p && b[6] === p)
+      );
     }
 
-    function checkWinner() {
-      const winner = checkStaticWinner();
-      if (winner) {
-        gameActive = false;
-        statusEl.textContent = `${winner} Wins!`;
-      } else if (!board.includes("")) {
-        gameActive = false;
-        statusEl.textContent = "It's a Draw!";
-      } else {
-        statusEl.textContent = userTurn ? "Your Turn" : "Bot Thinking...";
-      }
-    }
-
-    function resetGame() {
-      board = Array(9).fill("");
-      userTurn = true;
-      gameActive = true;
-      statusEl.textContent = "Your Turn";
-      renderBoard();
-    }
-
-    renderBoard();
+    startGame();
   </script>
 </body>
 </html>
