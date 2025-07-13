@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DumourR | Noctale Visuals</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
@@ -14,9 +14,9 @@
     }
 
     body {
-      font-family: 'Cinzel', serif;
-      background: linear-gradient(to right, #0d0d0d, #1a1a1a);
-      color: #ffffff;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(to right, #0a0a0a, #1e1e1e);
+      color: #e0e0e0;
       overflow-x: hidden;
       line-height: 1.6;
     }
@@ -25,7 +25,7 @@
       position: fixed;
       top: 0;
       width: 100%;
-      background: rgba(0, 0, 0, 0.85);
+      background: rgba(10, 10, 10, 0.95);
       padding: 10px 30px;
       display: flex;
       flex-direction: column;
@@ -36,11 +36,12 @@
     }
 
     .logo {
-      font-size: 2.5em;
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8em;
       font-weight: bold;
-      color: #ff0077;
-      font-family: 'Cinzel', serif;
+      color: #ff3366;
       margin-bottom: 5px;
+      text-shadow: 0 0 10px rgba(255, 51, 102, 0.5);
     }
 
     .nav-links {
@@ -50,14 +51,14 @@
     }
 
     .nav-links a {
-      color: #ccc;
+      color: #aaa;
       text-decoration: none;
       font-size: 1em;
       transition: color 0.3s;
     }
 
     .nav-links a:hover {
-      color: #ff0077;
+      color: #ff3366;
     }
 
     .hero {
@@ -74,16 +75,19 @@
     }
 
     .hero h1 {
+      font-family: 'Playfair Display', serif;
       font-size: 3em;
-      color: #fff;
-      text-shadow: 0 0 20px #ff0077;
+      color: #ffffff;
+      text-shadow: 0 0 20px #ff3366;
       margin-bottom: 20px;
+      animation: fadeInDown 2s ease-out;
     }
 
     .hero p {
-      font-size: 1.2em;
-      color: #bbb;
+      font-size: 1.1em;
+      color: #bbbbbb;
       max-width: 600px;
+      animation: fadeInUp 2s ease-out;
     }
 
     .links {
@@ -95,21 +99,21 @@
     }
 
     .link-button {
-      background: #1f1f1f;
+      background: #1c1c1c;
       color: #fff;
       padding: 12px 24px;
-      border: 2px solid #444;
+      border: 2px solid #555;
       border-radius: 8px;
       text-decoration: none;
-      font-weight: 600;
+      font-weight: 500;
       transition: all 0.3s ease;
     }
 
     .link-button:hover {
-      background: #ff0077;
+      background: #ff3366;
       color: #fff;
       transform: scale(1.05);
-      box-shadow: 0 0 15px #ff0077;
+      box-shadow: 0 0 15px #ff3366;
     }
 
     section {
@@ -118,7 +122,7 @@
     }
 
     .dark {
-      background: #111;
+      background: #121212;
     }
 
     .projects iframe {
@@ -128,7 +132,12 @@
       margin: 10px;
       border-radius: 10px;
       border: none;
-      box-shadow: 0 0 15px rgba(255, 0, 119, 0.3);
+      box-shadow: 0 0 15px rgba(255, 51, 102, 0.3);
+      transition: transform 0.3s ease;
+    }
+
+    .projects iframe:hover {
+      transform: scale(1.05);
     }
 
     .video-row {
@@ -142,13 +151,33 @@
       text-align: center;
       padding: 20px;
       background: #0a0a0a;
-      color: #666;
+      color: #777;
       font-size: 0.9em;
     }
 
     @keyframes backgroundShift {
       0% { background-position: 0 0; }
       100% { background-position: 100% 100%; }
+    }
+
+    @keyframes fadeInDown {
+      0% { opacity: 0; transform: translateY(-30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.2em;
+      }
+
+      .hero p {
+        font-size: 1em;
+      }
     }
   </style>
 </head>
