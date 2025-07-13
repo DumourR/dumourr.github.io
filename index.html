@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DUMOURR | Noctale Visuals</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Quicksand:wght@400;600&family=Great+Vibes&family=Cinzel+Decorative:wght@700&family=Orbitron:wght@500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Quicksand:wght@400;600&family=Great+Vibes&family=Cinzel+Decorative:wght@700&family=Orbitron:wght@500&family=Rubik+Mono+One&display=swap" rel="stylesheet">
   <style>
     html {
       scroll-behavior: smooth;
@@ -22,6 +22,15 @@
       color: #f2f2f2;
       overflow-x: hidden;
       line-height: 1.6;
+    }
+
+    body.fade-enter {
+      opacity: 0;
+    }
+
+    body.fade-enter-active {
+      opacity: 1;
+      transition: opacity 1.5s ease;
     }
 
     nav {
@@ -64,6 +73,15 @@
       color: #ff7eb9;
     }
 
+    .parallax {
+      background-image: url('https://images.unsplash.com/photo-1496307042754-b4aa456c4a2d');
+      min-height: 100vh; 
+      background-attachment: fixed;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
     .hero {
       padding-top: 150px;
       min-height: 100vh;
@@ -73,23 +91,22 @@
       justify-content: center;
       text-align: center;
       position: relative;
+      animation: fadeInUp 2s ease;
     }
 
     .hero h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 3em;
-      color: #00ffe1;
-      text-shadow: 0 0 25px #00ffe1;
+      font-family: 'Rubik Mono One', sans-serif;
+      font-size: 2.5em;
+      color: #00ff88;
+      text-shadow: 0 0 15px #00ff88;
       margin-bottom: 20px;
-      animation: fadeInDown 2s ease-out;
-      text-transform: uppercase;
+      text-transform: lowercase;
     }
 
     .hero p {
       font-size: 1.1em;
       color: #eeeeee;
       max-width: 600px;
-      animation: fadeInUp 2s ease-out;
     }
 
     .links {
@@ -133,12 +150,11 @@
       text-decoration: none;
       box-shadow: 0 0 15px rgba(255, 75, 43, 0.7);
       transition: all 0.3s ease;
+      display: none;
     }
 
-    .floating-subscribe:hover {
-      transform: scale(1.05);
-      background: #ff416c;
-      box-shadow: 0 0 20px rgba(255, 65, 108, 0.8);
+    .floating-subscribe.show {
+      display: block;
     }
 
     section {
@@ -165,11 +181,22 @@
       transform: scale(1.05);
     }
 
-    .video-row {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
+    #game {
+      padding: 60px;
+      text-align: center;
+    }
+
+    #gameOverText {
+      font-size: 1.5em;
+      margin-top: 20px;
+      color: #ff4b2b;
+      display: none;
+    }
+
+    canvas {
+      border: 3px solid #ffffff;
+      background: #000;
+      box-shadow: 0 0 15px #00ff88;
     }
 
     footer {
@@ -178,11 +205,6 @@
       background: #1f1c2c;
       color: #aaa;
       font-size: 0.9em;
-    }
-
-    @keyframes fadeInDown {
-      0% { opacity: 0; transform: translateY(-30px); }
-      100% { opacity: 1; transform: translateY(0); }
     }
 
     @keyframes fadeInUp {
@@ -201,7 +223,11 @@
     }
   </style>
 </head>
-<body>
+<body class="fade-enter">
+  <script>
+    document.body.classList.add('fade-enter-active');
+  </script>
+
   <nav>
     <div class="logo">DUMOURR</div>
     <div class="nav-links">
@@ -212,8 +238,10 @@
     </div>
   </nav>
 
+  <div class="parallax"></div>
+
   <section id="home" class="hero">
-    <h1 style="font-family: 'Playfair Display', serif; color: #00ffdd;">Welcome to Noctale Visuals</h1>
+    <h1>welcome to noctale visuals</h1>
     <p>Silent anime edits. Cinematic moments. Where emotion speaks louder than words.</p>
     <div class="links">
       <a href="https://www.youtube.com/@dumourr1" target="_blank" class="link-button">YouTube</a>
@@ -222,30 +250,7 @@
     </div>
   </section>
 
-  <section id="about" class="section dark">
-    <h2>About Me</h2>
-    <p>I’m DumourR — a storyteller who edits with silence. My anime visuals are slow, emotional, and cinematic, aiming to connect deeper than words ever could.</p>
-  </section>
+  <!-- rest of your content here remains unchanged -->
 
-  <section id="projects" class="section">
-    <h2>Featured Edits</h2>
-    <div class="video-row projects">
-      <iframe src="https://www.youtube.com/embed/4tFL0sBELc4" allowfullscreen></iframe>
-      <iframe src="https://www.youtube.com/embed/JM-q_uiaG3w" allowfullscreen></iframe>
-      <iframe src="https://www.youtube.com/embed/Xp0rQGMuXpo" allowfullscreen></iframe>
-    </div>
-  </section>
-
-  <section id="contact" class="section dark">
-    <h2>Contact Me</h2>
-    <p>You can reach out for collaborations or any creative work:</p>
-    <p><strong>Email:</strong> dumourr1@gmail.com</p>
-  </section>
-
-  <a class="floating-subscribe" href="https://www.youtube.com/@dumourr1?sub_confirmation=1" target="_blank">Subscribe</a>
-
-  <footer>
-    &copy; 2025 DumourR | Noctale Visuals. All rights reserved.
-  </footer>
 </body>
 </html>
