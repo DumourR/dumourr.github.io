@@ -168,14 +168,11 @@
       font-size: 0.9em;
     }
 
-    @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 2.2em;
-      }
-
-      .hero p {
-        font-size: 1em;
-      }
+    canvas {
+      background: #000;
+      display: block;
+      margin: 20px auto;
+      border: 2px solid #fff;
     }
   </style>
 </head>
@@ -187,6 +184,7 @@
       <a href="#projects">Projects</a>
       <a href="#contact">Contact</a>
       <a href="#about">About</a>
+      <a href="#game">Game</a>
     </div>
   </nav>
 
@@ -219,6 +217,41 @@
     <p>Hi, I’m DumourR – a passionate and experienced anime editor dedicated to transforming iconic anime moments into mesmerizing visual stories. My journey into editing began with a simple love for anime and evolved into an art form where each transition, beat, and effect breathes new life into beloved scenes.</p>
     <p>At DumourR, editing is more than just cuts and effects – it’s storytelling. I specialize in crafting high-quality edits using advanced techniques, creative transitions, and sound design to evoke emotion and energy in every frame.</p>
     <p>This platform isn’t just about showcasing my work – it’s a space for fellow editors, anime fans, and creators to come together. Whether you're looking to learn, connect, or get inspired, DumourR is your haven.</p>
+  </section>
+
+  <section id="game">
+    <h2>Mini Game</h2>
+    <canvas id="gameCanvas" width="300" height="150"></canvas>
+    <div id="gameOver" style="display:none; font-size: 1.2em; margin-top: 10px;">
+      Game Over! <br><br>
+      <a class="link-button" href="https://www.youtube.com/@dumourr1?sub_confirmation=1" target="_blank">Subscribe</a>
+    </div>
+    <script>
+      const canvas = document.getElementById("gameCanvas");
+      const ctx = canvas.getContext("2d");
+      let x = 10;
+      let score = 0;
+      let gameInterval = setInterval(draw, 60);
+      let isGameOver = false;
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "white";
+        ctx.font = "20px Arial";
+        ctx.fillText("Score: " + score, 10, 20);
+        ctx.beginPath();
+        ctx.arc(x, 75, 10, 0, Math.PI * 2);
+        ctx.fillStyle = "red";
+        ctx.fill();
+        ctx.closePath();
+        x += 3;
+        score++;
+        if (x > canvas.width) {
+          clearInterval(gameInterval);
+          document.getElementById("gameOver").style.display = "block";
+        }
+      }
+    </script>
   </section>
 
   <footer>
