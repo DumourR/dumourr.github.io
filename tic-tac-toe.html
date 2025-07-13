@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tic Tac Toe - DumourR</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Cinzel&family=Rubik:wght@700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #1e1e2f, #111);
+      font-family: 'Orbitron', sans-serif;
+      color: #fff;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 3em;
+      margin: 20px 0;
+      color: #f39c12;
+      font-family: 'Cinzel', serif;
+      animation: fadeInDown 1s ease-out;
+    }
+
+    .board {
+      display: grid;
+      grid-template-columns: repeat(3, 100px);
+      gap: 10px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .cell {
+      width: 100px;
+      height: 100px;
+      background: #222;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5em;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: background 0.3s ease;
+      font-family: 'Rubik', sans-serif;
+    }
+
+    .cell:hover {
+      background: #f39c12;
+      color: #000;
+    }
+
+    #status {
+      margin-top: 20px;
+      font-size: 1.5em;
+      color: #00eaff;
+    }
+
+    #resetBtn {
+      margin-top: 30px;
+      padding: 12px 24px;
+      font-size: 1em;
+      border: none;
+      background: #f39c12;
+      color: #000;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <h1>Tic Tac Toe</h1>
+  <div id="status">Your Turn</div>
+  <div class="board" id="board"></div>
+  <button id="resetBtn" onclick="resetGame()">Play Again</button>
+
+  <script>
+    const boardEl = document.getElementById("board");
+    const statusEl = document.getElementById("status");
+    let board = Array(9).fill("");
+    let userTurn = true;
+    let gameActive = true;
+
+    function renderBoard() {
+      boardEl.innerHTML = "";
+      board.forEach((val, idx) => {
+        const cell = document.createElement("div");
+        cell.classList.add("cell");
+        cell.textContent = val;
+        cell.onclick = () => handleClick(idx);
+        boardEl.appendChild(cell);
+      });
+    }
+
+    function handleClick(index) {
+      if (!gameActive || board[index] !== "" || !userTurn) return;
+      board[index] = "X";
+      userTurn = false;
+      renderBoard();
+      checkWinner();
+      if (gameActive) setTimeout(botMove, 800);
+    }
+
+    function botMove() {
+      let bestScore = -Infinity;
+      let move;
+      for (let i = 0; i < 9; i++) {
+        if (board[i] === "") {
+          board[i] = "O";
+          let score = minimax(board, 0, false);
+          board[i] = "";
+          if (score > bestScore) {
+            bestScore = score;
+            move = i;
+          }
+        }
+      }
+      board[move] = "O";
+      userTurn = true;
+      renderBoard();
+      checkWinner();
+    }
+
+    function minimax(board, depth, isMaximizing) {
+      const winner = checkStaticWinner();
+      if (winner === "X") return -10 + depth;
+      if (winner === "O") return 10 - depth;
+      if (!board.includes("")) return 0;
+
+      if (isMaximizing) {
+        let bestScore = -Infinity;
+        for (let i = 0; i < 9; i++) {
+          if (board[i] === "") {
+            board[i] = "O";
+            bestScore = Math.max(bestScore, minimax(board, depth + 1, false));
+            board[i] = "";
+          }
+        }
+        return bestScore;
+      } else {
+        let bestScore = Infinity;
+        for (let i = 0; i < 9; i++) {
+          if (board[i] === "") {
+            board[i] = "X";
+            bestScore = Math.min(bestScore, minimax(board, depth + 1, true));
+            board[i] = "";
+          }
+        }
+        return bestScore;
+      }
+    }
+
+    function checkStaticWinner() {
+      const winPatterns = [
+        [0,1,2],[3,4,5],[6,7,8],
+        [0,3,6],[1,4,7],[2,5,8],
+        [0,4,8],[2,4,6]
+      ];
+      for (let pattern of winPatterns) {
+        const [a,b,c] = pattern;
+        if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+          return board[a];
+        }
+      }
+      return null;
+    }
+
+    function checkWinner() {
+      const winner = checkStaticWinner();
+      if (winner) {
+        gameActive = false;
+        statusEl.textContent = `${winner} Wins!`;
+      } else if (!board.includes("")) {
+        gameActive = false;
+        statusEl.textContent = "It's a Draw!";
+      } else {
+        statusEl.textContent = userTurn ? "Your Turn" : "Bot Thinking...";
+      }
+    }
+
+    function resetGame() {
+      board = Array(9).fill("");
+      userTurn = true;
+      gameActive = true;
+      statusEl.textContent = "Your Turn";
+      renderBoard();
+    }
+
+    renderBoard();
+  </script>
+</body>
+</html>
