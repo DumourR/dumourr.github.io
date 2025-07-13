@@ -1,184 +1,173 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DumourR | Noctale Visuals</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
       scroll-behavior: smooth;
-    }
+    }body {
+  font-family: 'Quicksand', sans-serif;
+  background: linear-gradient(135deg, #1f1c2c, #928dab);
+  color: #f2f2f2;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
 
-    body {
-      font-family: 'Roboto', sans-serif;
-      background: linear-gradient(to right, #0a0a0a, #1e1e1e);
-      color: #e0e0e0;
-      overflow-x: hidden;
-      line-height: 1.6;
-    }
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(31, 28, 44, 0.95);
+  padding: 10px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  z-index: 999;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
 
-    nav {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: rgba(10, 10, 10, 0.95);
-      padding: 10px 30px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      z-index: 999;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
-    }
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8em;
+  font-weight: bold;
+  color: #ff7eb9;
+  margin-bottom: 5px;
+  text-shadow: 0 0 10px rgba(255, 126, 185, 0.5);
+}
 
-    .logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.8em;
-      font-weight: bold;
-      color: #ff3366;
-      margin-bottom: 5px;
-      text-shadow: 0 0 10px rgba(255, 51, 102, 0.5);
-    }
+.nav-links {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
 
-    .nav-links {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
+.nav-links a {
+  color: #ddd;
+  text-decoration: none;
+  font-size: 1em;
+  transition: color 0.3s;
+}
 
-    .nav-links a {
-      color: #aaa;
-      text-decoration: none;
-      font-size: 1em;
-      transition: color 0.3s;
-    }
+.nav-links a:hover {
+  color: #ff7eb9;
+}
 
-    .nav-links a:hover {
-      color: #ff3366;
-    }
+.hero {
+  padding-top: 150px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
 
-    .hero {
-      padding-top: 150px;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle, #101010, #0d0d0d);
-      animation: backgroundShift 60s linear infinite;
-      padding: 100px 20px;
-      text-align: center;
-    }
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 3em;
+  color: #ffffff;
+  text-shadow: 0 0 20px #ff7eb9;
+  margin-bottom: 20px;
+  animation: fadeInDown 2s ease-out;
+}
 
-    .hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 3em;
-      color: #ffffff;
-      text-shadow: 0 0 20px #ff3366;
-      margin-bottom: 20px;
-      animation: fadeInDown 2s ease-out;
-    }
+.hero p {
+  font-size: 1.1em;
+  color: #eeeeee;
+  max-width: 600px;
+  animation: fadeInUp 2s ease-out;
+}
 
-    .hero p {
-      font-size: 1.1em;
-      color: #bbbbbb;
-      max-width: 600px;
-      animation: fadeInUp 2s ease-out;
-    }
+.links {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+}
 
-    .links {
-      margin-top: 30px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-    }
+.link-button {
+  background: linear-gradient(45deg, #ff416c, #ff4b2b);
+  color: #fff;
+  padding: 14px 30px;
+  border: none;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.1em;
+  transition: all 0.4s ease;
+  box-shadow: 0 0 20px rgba(255, 65, 108, 0.6);
+}
 
-    .link-button {
-      background: #1c1c1c;
-      color: #fff;
-      padding: 12px 24px;
-      border: 2px solid #555;
-      border-radius: 8px;
-      text-decoration: none;
-      font-weight: 500;
-      transition: all 0.3s ease;
-    }
+.link-button:hover {
+  background: linear-gradient(45deg, #ff4b2b, #ff416c);
+  transform: scale(1.08);
+  box-shadow: 0 0 30px rgba(255, 75, 43, 0.9);
+}
 
-    .link-button:hover {
-      background: #ff3366;
-      color: #fff;
-      transform: scale(1.05);
-      box-shadow: 0 0 15px #ff3366;
-    }
+section {
+  padding: 100px 20px;
+  text-align: center;
+}
 
-    section {
-      padding: 100px 20px;
-      text-align: center;
-    }
+.dark {
+  background: rgba(255, 255, 255, 0.03);
+}
 
-    .dark {
-      background: #121212;
-    }
+.projects iframe {
+  width: 100%;
+  max-width: 320px;
+  height: 180px;
+  margin: 10px;
+  border-radius: 10px;
+  border: none;
+  box-shadow: 0 0 15px rgba(255, 126, 185, 0.3);
+  transition: transform 0.3s ease;
+}
 
-    .projects iframe {
-      width: 100%;
-      max-width: 320px;
-      height: 180px;
-      margin: 10px;
-      border-radius: 10px;
-      border: none;
-      box-shadow: 0 0 15px rgba(255, 51, 102, 0.3);
-      transition: transform 0.3s ease;
-    }
+.projects iframe:hover {
+  transform: scale(1.05);
+}
 
-    .projects iframe:hover {
-      transform: scale(1.05);
-    }
+.video-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
 
-    .video-row {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-    }
+footer {
+  text-align: center;
+  padding: 20px;
+  background: #1f1c2c;
+  color: #aaa;
+  font-size: 0.9em;
+}
 
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #0a0a0a;
-      color: #777;
-      font-size: 0.9em;
-    }
+@keyframes fadeInDown {
+  0% { opacity: 0; transform: translateY(-30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
 
-    @keyframes backgroundShift {
-      0% { background-position: 0 0; }
-      100% { background-position: 100% 100%; }
-    }
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
 
-    @keyframes fadeInDown {
-      0% { opacity: 0; transform: translateY(-30px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.2em;
+  }
 
-    @keyframes fadeInUp {
-      0% { opacity: 0; transform: translateY(30px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
+  .hero p {
+    font-size: 1em;
+  }
+}
 
-    @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 2.2em;
-      }
-
-      .hero p {
-        font-size: 1em;
-      }
-    }
   </style>
 </head>
 <body>
@@ -190,42 +179,30 @@
       <a href="#projects">Projects</a>
       <a href="#contact">Contact</a>
     </div>
-  </nav>
-
-  <section id="home" class="hero">
+  </nav>  <section id="home" class="hero">
     <h1>Welcome to Noctale Visuals</h1>
     <p>Silent anime edits. Cinematic moments. Where emotion speaks louder than words.</p>
     <div class="links">
-      <a href="https://www.youtube.com/@dumourr1" target="_blank" class="link-button">My YouTube Channel</a>
-      <a href="https://www.instagram.com/noctale.visuals" target="_blank" class="link-button">Instagram</a>
+      <a href="https://www.youtube.com/@dumourr1" target="_blank" class="link-button">YouTube + Instagram</a>
     </div>
-  </section>
-
-  <section id="about" class="section dark">
+  </section>  <section id="about" class="section dark">
     <h2>About Me</h2>
     <p>I’m DumourR — a storyteller who edits with silence. My anime visuals are slow, emotional, and cinematic, aiming to connect deeper than words ever could.</p>
-  </section>
-
-  <section id="projects" class="section">
+  </section>  <section id="projects" class="section">
     <h2>Featured Edits</h2>
-    <div class="video-row">
+    <div class="video-row projects">
       <iframe src="https://www.youtube.com/embed/4tFL0sBELc4" allowfullscreen></iframe>
       <iframe src="https://www.youtube.com/embed/JM-q_uiaG3w" allowfullscreen></iframe>
       <iframe src="https://www.youtube.com/embed/Xp0rQGMuXpo" allowfullscreen></iframe>
     </div>
-  </section>
-
-  <section id="contact" class="section dark">
+  </section>  <section id="contact" class="section dark">
     <h2>Contact Me</h2>
     <p>You can reach out for collaborations or any creative work:</p>
     <p><strong>Email:</strong> dumourr1@gmail.com</p>
     <div class="links">
-      <a href="https://www.youtube.com/@dumourr1" target="_blank" class="link-button">YouTube</a>
-      <a href="https://www.instagram.com/noctale.visuals" target="_blank" class="link-button">Instagram</a>
+      <a href="https://www.youtube.com/@dumourr1" target="_blank" class="link-button">YouTube + Instagram</a>
     </div>
-  </section>
-
-  <footer>
+  </section>  <footer>
     &copy; 2025 DumourR | Noctale Visuals. All rights reserved.
   </footer>
 </body>
