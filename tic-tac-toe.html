@@ -135,16 +135,21 @@
   const popupEl = document.getElementById('popup');
   const playAgainEl = document.getElementById('playAgain');
   const subscribeBtn = document.getElementById('subscribe-btn');
+  const gameContainer = document.getElementById('gameContainer');
+  const intro = document.getElementById('intro');
 
   let board = Array(9).fill('');
   let userTurn = true;
   let gameOver = false;
 
-  setTimeout(() => {
-    document.getElementById('intro').style.display = 'none';
-    document.getElementById('gameContainer').style.display = 'flex';
-    drawBoard();
-  }, 2000);
+  // Wait for intro to fade in before showing the game
+  window.onload = () => {
+    setTimeout(() => {
+      intro.style.display = 'none';
+      gameContainer.style.display = 'flex';
+      drawBoard();
+    }, 2500); // Wait 2.5s
+  };
 
   function drawBoard() {
     boardEl.innerHTML = '';
@@ -164,12 +169,12 @@
     userTurn = false;
     drawBoard();
     if (checkWinner('❌')) return endGame('You Win!');
-    if (board.every(cell => cell)) return endGame(\"It's a Draw!\");
+    if (board.every(cell => cell)) return endGame("It's a Draw!");
     setTimeout(() => {
       const move = getBestMove();
       board[move] = '⭕';
       if (checkWinner('⭕')) return endGame('Bot Wins!');
-      if (board.every(cell => cell)) return endGame(\"It's a Draw!\");
+      if (board.every(cell => cell)) return endGame("It's a Draw!");
       userTurn = true;
       drawBoard();
     }, 700);
@@ -227,6 +232,3 @@
     drawBoard();
   }
 </script>
-
-</body>
-</html>
