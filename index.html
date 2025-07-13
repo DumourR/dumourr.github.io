@@ -5,70 +5,123 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>DumourR | Noctale Visuals</title>
   <style>
+    /* Body styling */
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
       background-color: #0d0d0d;
-      color: #ffffff;
+      color: white;
+      overflow-x: hidden;
     }
+
+    /* Cinematic background */
+    .background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://your-image-link-here');  /* Replace with your cinematic background image URL */
+      background-size: cover;
+      filter: brightness(50%);
+      z-index: -1;
+      animation: backgroundMove 30s linear infinite;
+    }
+
+    @keyframes backgroundMove {
+      0% { background-position: 0 0; }
+      100% { background-position: 100% 100%; }
+    }
+
+    /* Main container */
     .container {
-      max-width: 800px;
-      margin: auto;
-      padding: 40px 20px;
+      text-align: center;
+      padding: 50px;
     }
+
+    /* Title animation */
     h1 {
       font-size: 3em;
-      text-align: center;
-      letter-spacing: 2px;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: white;
+      animation: fadeIn 3s ease-out;
     }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
+    /* Bio text */
     p {
-      font-size: 1.2em;
-      line-height: 1.6em;
-      text-align: center;
+      font-size: 1.5em;
       color: #ccc;
+      animation: fadeIn 4s ease-out;
     }
+
+    /* Links styling */
     .links {
       display: flex;
       justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 40px;
       gap: 20px;
+      margin-top: 50px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: linksFadeIn 5s ease-out forwards;
     }
+
+    @keyframes linksFadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+
     .link-button {
-      background-color: #1a1a1a;
+      background-color: #222;
       color: #fff;
-      padding: 15px 25px;
-      border: 1px solid #444;
-      border-radius: 5px;
+      padding: 20px 30px;
+      border-radius: 8px;
       text-decoration: none;
-      transition: 0.3s;
+      font-size: 1.2em;
+      text-transform: uppercase;
+      transition: all 0.3s;
     }
+
     .link-button:hover {
-      background-color: #333;
-      border-color: #666;
+      background-color: #444;
+      transform: scale(1.1);
     }
+
+    /* Footer */
     footer {
-      text-align: center;
-      margin-top: 60px;
-      font-size: 0.9em;
-      color: #555;
+      font-size: 1em;
+      color: #777;
+      margin-top: 50px;
     }
   </style>
 </head>
 <body>
+  <!-- Cinematic Background -->
+  <div class="background"></div>
+
+  <!-- Main Content -->
   <div class="container">
     <h1>DumourR</h1>
-    <p>Cinematic anime edits, silent visuals, and stories without words. Welcome to Noctale Visuals — where emotion meets stillness.</p>
+    <p>Cinematic anime edits. Silent stories. Noctale Visuals.</p>
+
+    <!-- Social Media Links -->
     <div class="links">
       <a href="https://www.youtube.com/@dumourr1" target="_blank" class="link-button">YouTube</a>
       <a href="https://www.instagram.com/noctale.visuals" target="_blank" class="link-button">Instagram</a>
       <a href="https://youtube.com/shorts/2xKLteyhD7E" target="_blank" class="link-button">Watch Edit #1</a>
-      <a href="https://youtube.com/shorts/lGRojwVzpls" target="_blank" class="link-button">Watch Edit #2</a>
-      <a href="https://youtube.com/shorts/RTYlo8nuU3w" target="_blank" class="link-button">Watch Edit #3</a>
+      <a href="https://youtube.com/shorts/0amRn1JCsNc" target="_blank" class="link-button">Watch Edit #2</a>
+      <a href="https://youtube.com/shorts/4tFL0sBELc4" target="_blank" class="link-button">Watch Edit #3</a>
     </div>
-    <footer>
-      &copy; 2025 DumourR | Noctale Visuals. All rights reserved.
-    </footer>
   </div>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 DumourR | Noctale Visuals. All rights reserved.
+  </footer>
 </body>
 </html>
